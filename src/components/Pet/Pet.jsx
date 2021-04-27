@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 const Pet = ({ pet }) => {
   const [vac, setVac] = useState(pet.isVaccinated)
-  const [res, setRes] = useState('')
+  const [res, setRes] = useState(true)
 
   function toggle() {
     setVac(prevVac => !prevVac)
+    setRes(false)
 
     fetch('/api/pets/', {
       method: 'POST',
@@ -15,7 +16,7 @@ const Pet = ({ pet }) => {
       },
       body: JSON.stringify({
         name: pet.name,
-        // 'hotel': props.item.name
+        isVaccinated: !vac
       })
     }).then(response => setRes(true))
       .catch(error => setRes(false))
@@ -25,7 +26,13 @@ const Pet = ({ pet }) => {
     <div>
       <p>{pet.name}</p>
       <p>{pet.animal}</p>
-      <p>{vac ? 'true' : 'false'}</p>
+      <p>is vacinated: {
+        res
+          ? vac
+            ? 'true'
+            : 'false'
+          : '...'
+      }</p>
       <button onClick={toggle}>Toggle</button>
     </div>
   )
