@@ -6,7 +6,7 @@ const Client = ({ item }) => {
 
   return (
     <div>
-      <p>{item.name}</p>
+      <h4>{item.name}</h4>
       {item.pets.map(pet => <Pet key={uuidv4()} pet={pet} />)}
     </div>
   )
