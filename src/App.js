@@ -8,10 +8,12 @@ const App = () => {
   const [data, setData] = useState([])
 
   function click() {
+    setData(null)
+
     fetch(`/api/clients?search=${search}`)
       .then(response => response.json())
       .then(data => setData(data))
-      .catch(error => setData("dsojdsopjds"))
+      .catch(error => setData(null))
   }
 
   return (
@@ -21,7 +23,7 @@ const App = () => {
       <input type="text" onChange={(e) => setSearch(e.target.value)} />
       <button disabled={search.length < 3 ? true : false} onClick={() => click()}>Search</button>
 
-      {data.map(item => <Client key={uuidv4()} item={item} />)}
+      {data && data.map(item => <Client key={uuidv4()} item={item} />)}
 
     </div>
   )
